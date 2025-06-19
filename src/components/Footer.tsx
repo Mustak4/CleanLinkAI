@@ -1,13 +1,16 @@
 
 import { Link } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Footer = () => {
+  const navigate = useNavigate();
+
   return (
     <footer className="bg-gray-900 text-white py-12 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
+            <div className="flex items-center space-x-2 mb-4 cursor-pointer" onClick={() => navigate('/')}>
               <div className="p-2 bg-primary rounded-lg">
                 <Link className="w-6 h-6 text-white" />
               </div>
@@ -22,17 +25,17 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Product</h4>
             <ul className="space-y-2 text-gray-400">
-              <li><a href="#" className="hover:text-white transition-colors">Features</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">API</a></li>
+              <li><button onClick={() => navigate('/#features')} className="hover:text-white transition-colors">Features</button></li>
+              <li><button onClick={() => navigate('/pricing')} className="hover:text-white transition-colors">Pricing</button></li>
+              <li><button onClick={() => navigate('/dashboard')} className="hover:text-white transition-colors">Dashboard</button></li>
             </ul>
           </div>
           
           <div>
             <h4 className="font-semibold mb-4">Support</h4>
             <ul className="space-y-2 text-gray-400">
-              <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
+              <li><button onClick={() => navigate('/help')} className="hover:text-white transition-colors">Help Center</button></li>
+              <li><button onClick={() => navigate('/help')} className="hover:text-white transition-colors">Contact</button></li>
               <li><a href="#" className="hover:text-white transition-colors">Privacy</a></li>
             </ul>
           </div>
