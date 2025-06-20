@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  links     Link[]
+}
+
+// Link model for storing original and shortened URLs
+model Link {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  originalUrl String
+  cleanUrl    String
+  title       String?
+  description String?
+  clicks      Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+
+  // Relation to click events
+  clickEvents Click[]
+}
+
+// Click model for tracking individual click events
+model Click {
+  id        String   @id @default(cuid())
+  linkId    String
+  link      Link     @relation(fields: [linkId], references: [id])
+  timestamp DateTime @default(now())
+  userAgent String?
+  referrer  String?
+  ip        String?
+  country   String?
+  city      String?
+  region    String?
+}
